@@ -1,0 +1,6 @@
+@AntiSpy_HostAddress = http://localhost:5016
+
+GET {{AntiSpy_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
