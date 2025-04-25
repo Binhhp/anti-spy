@@ -1,0 +1,6 @@
+{
+  "$schema": "https://dev.wix.com/wix-cli/schemas/dashboard-plugin.json",
+  "id": "50a7265f-366f-48b3-892a-de9e4902862f",
+  "title": "Anti Spy Plugin",
+  "extends": "bc19fdaa-7acf-4ec2-a079-10d7064e765f"
+}
