@@ -1,6 +1,6 @@
-import React, { type FC } from 'react';
-import { EmptyState, Page, WixDesignSystemProvider } from '@wix/design-system';
-import '@wix/design-system/styles.global.css';
+import React, { type FC } from "react";
+import { EmptyState, Page, WixDesignSystemProvider } from "@wix/design-system";
+import "@wix/design-system/styles.global.css";
 
 const DashboardPage: FC = () => {
   return (

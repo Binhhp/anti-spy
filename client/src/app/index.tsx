@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
 
 ReactDOM.createRoot(
-  document.getElementById("orichi-root") as HTMLElement
+  document.getElementById("root") as HTMLElement
 ).render(
   <BrowserRouter>
     <Routes />
