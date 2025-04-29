@@ -1,4 +1,4 @@
-import { antiSetting } from "app/models/antispy-setting";
+import { antiSetting } from "dashboard/pages/anti-spy/models/antispy-setting";
 import React, { useState } from "react";
 import { AntiSettingDto } from "./model";
 

@@ -1,10 +1,9 @@
 import { Box, Card, Checkbox, Text } from "@wix/design-system";
-import React from "react";
-import { stateContext } from "../state-manager";
+import React, { FC } from "react";
+import { stateContext } from "../../state-manager";
 
-export default function GeneralSettings() {
+const GeneralSettings: FC = () => {
   const state = React.useContext(stateContext);
-
   const onChange =
     (key: "protectImages" | "protectText" | "stopKeyboardShortcuts") => () => {
       state.setting[key] = !state.setting[key];
@@ -17,18 +16,18 @@ export default function GeneralSettings() {
   }) => (
     <Box direction="vertical">
       <Text>{item.label}</Text>
-      <Text size="tiny" secondary>
+      <Text size="small" secondary>
         {item.desc}
       </Text>
       {item.caption && (
-        <Text size="tiny" secondary>
+        <Text size="small" secondary>
           {item.caption}
         </Text>
       )}
     </Box>
   );
   return (
-    <Card>
+    <Card className="anti-spy-generate-settings">
       <Card.Header title="General Settings"></Card.Header>
       <Card.Divider />
       <Card.Content>
@@ -71,4 +70,6 @@ export default function GeneralSettings() {
       </Card.Content>
     </Card>
   );
-}
+};
+
+export default GeneralSettings;
