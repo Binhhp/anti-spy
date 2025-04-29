@@ -1,10 +1,10 @@
 import { Card, Checkbox } from "@wix/design-system";
 import React from "react";
 
-export default function GeneralSettings() {
+export default function AdvanceSetting() {
   return (
     <Card>
-      <Card.Header title="General Settings"></Card.Header>
+      <Card.Header title="Advance Settings"></Card.Header>
       <Card.Divider />
       <Card.Content>
         <div className="anti-spy-general-settings">

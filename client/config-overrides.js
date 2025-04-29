@@ -1,5 +1,5 @@
 const path = require("path");
 module.exports = function override(config, env) {
-  config.entry = path.resolve(__dirname, `src/app/index.tsx`);
+  config.entry = path.resolve(__dirname, `src/index.tsx`);
   return config;
 };

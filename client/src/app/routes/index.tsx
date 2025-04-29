@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layout/main";
 import React from "react";
-import AppSettings from "app/components/app-settings";
+import AntiSpy from "app/components/settings";
 
 export default function Routes() {
   return useRoutes([
@@ -11,7 +11,7 @@ export default function Routes() {
       children: [
         {
           path: "/",
-          element: <AppSettings />,
+          element: <AntiSpy />,
         },
       ],
     },
