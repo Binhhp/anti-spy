@@ -5,17 +5,73 @@ using Microsoft.EntityFrameworkCore;
 
 public class AntiCopySettingService(AntiSpyDbContext _context) : IScopedDependency
 {
-    public StoreEntity Get(string instanceId)
+    public ResponseResult<StoreResponse> GetBySiteId(string siteId)
     {
-        var store = _context.Store.Include(x => x.AntiCopySettings).FirstOrDefault(x => x.InstanceId == instanceId);
-        return store;
+        try
+        {
+            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.SiteId == siteId);
+            store.ThenThrowIfNull(Exceptions.NotFound(siteId));
+            return new ResponseResult<StoreResponse>(new StoreResponse(store));
+        }
+        catch (Exception ex)
+        {
+            return new ResponseResult<StoreResponse>().WihError("invalid_siteId", ex.Message);
+        }
     }
-    public async Task Set(string instanceId, AntiCopySettingsRequest request)
+    public ResponseResult<StoreResponse> Get(string instanceId)
     {
-        var store = _context.Store.FirstOrDefault(x => x.InstanceId == instanceId);
-        store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
-        store.AntiCopySettings = request.ToEntity();
-        await _context.AntiCopySetting.AddAsync(store.AntiCopySettings);
-        await _context.SaveChangesAsync();
+        try
+        {
+            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId);
+            store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
+            return new ResponseResult<StoreResponse>(new StoreResponse(store));
+        }
+        catch(Exception ex)
+        {
+            return new ResponseResult<StoreResponse>().WihError("invalid_instanceId", ex.Message);
+        }
+    }
+    public async Task<ResponseResult<object>> Set(string instanceId, AntiCopySettingsRequest request)
+    {
+        var result = new ResponseResult<object>();
+        try
+        {
+            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId);
+            store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
+            var newSettings = request != null ? request.ToEntity() : null;
+            if (newSettings == null)
+            {
+                if (store.Settings != null)
+                {
+                    _context.Settings.Remove(store.Settings);
+                    store.Settings = null;
+                }
+
+                await _context.SaveChangesAsync();
+                return result;
+            }
+
+            if (store.Settings == null)
+            {
+                if (newSettings == null) return result;
+                store.Settings = newSettings;
+                _context.Entry(store.Settings).State = EntityState.Added;
+            }
+            else
+            {
+                newSettings.Id = store.Settings.Id;
+                newSettings.CreatedTime = store.Settings.CreatedTime;
+                newSettings.ModifyTime = store.Settings.ModifyTime;
+                newSettings.StoreId = store.Settings.StoreId;
+                _context.Entry(store.Settings).CurrentValues.SetValues(newSettings);
+            }
+
+            await _context.SaveChangesAsync();
+            return result;
+        }
+        catch(Exception ex)
+        {
+            return result.WihError("invalid_request", ex.Message);
+        }
     }
 }

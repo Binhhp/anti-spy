@@ -11,9 +11,9 @@ public class StoreService(AppSetting _appSetting, ILogger _logger, AntiSpyDbCont
 {
     public async Task<string> InstallAsync(string code, string instanceId)
     {
-        _logger.Debug("End request install wix {@code} {@clientId} {@clientSecret}", code, _appSetting.WixSetting.ClientId, _appSetting.WixSetting.ClientSecret);
+        _logger.Debug("End request install wix {@code} {@clientId} {@clientSecret}", code, _appSetting.WixSetting.AppId, _appSetting.WixSetting.AppSecret);
         var authentication = new WixAuthorizationService();
-        var tokenStore = await authentication.AuthorizeWithResult(code, _appSetting.WixSetting.ClientId, _appSetting.WixSetting.ClientSecret);
+        var tokenStore = await authentication.AuthorizeWithResult(code, _appSetting.WixSetting.AppId, _appSetting.WixSetting.AppSecret);
         _logger.Debug("End token store", tokenStore);
         tokenStore.ThenThrowIf(r => tokenStore == null, Exceptions.NotFound(code));
 
@@ -67,6 +67,6 @@ public class StoreService(AppSetting _appSetting, ILogger _logger, AntiSpyDbCont
         {
             _logger.Error(ex, "Error when setup complete wix store " + store.AppInstanceName);
         }
-        return string.Format(_appSetting.WixSetting.RedirectAdmin, _appSetting.WixSetting.ClientId, instanceId, string.Empty);
+        return string.Format(_appSetting.WixSetting.RedirectAdmin, _appSetting.WixSetting.AppId, instanceId, string.Empty);
     }
 }

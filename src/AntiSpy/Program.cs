@@ -5,7 +5,7 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 var configurationRoot = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
@@ -26,11 +26,8 @@ builder.Services.RegisterSwaggerService();
 
 builder.Services.AddDbContext<AntiSpyDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AntiSpy")));
 
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger();
-builder.Services.AddSingleton(Log.Logger);
-builder.Host.UseSerilog();
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 

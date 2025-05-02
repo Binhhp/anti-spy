@@ -1,8 +1,8 @@
-import { antiSetting } from "dashboard/pages/anti-spy/models/antispy-setting";
+import { AntiSetting } from "dashboard/pages/anti-spy/models/antispy-setting";
 
 export class AntiSettingDto {
-  public static Init(): antiSetting {
-    const antiSettingDto: antiSetting = {
+  public static Init(): AntiSetting {
+    const antiSettingDto: AntiSetting = {
       disappearAfterSeconds: 2,
       protectImages: true,
       protectText: true,

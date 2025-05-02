@@ -8,7 +8,13 @@ const GeneralSettings: FC = () => {
     (key: "protectImages" | "protectText" | "stopKeyboardShortcuts") => () => {
       state.setting[key] = !state.setting[key];
       state.setState(state.setting);
+
+      if (!state.eventSettings) return;
+      if (state.setting[key]) state.eventSettings[key].use();
+      else state.eventSettings[key].remove();
+      state.resetEventSettings();
     };
+
   const getCheckboxLabel = (item: {
     label: string;
     desc: string;

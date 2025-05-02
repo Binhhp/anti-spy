@@ -8,9 +8,4 @@ public abstract class BaseEntity
     public string Id { get; set; }
     public DateTime CreatedTime { get; set; }
     public DateTime ModifyTime { get; set; }
-    public BaseEntity()
-    {
-        CreatedTime = DateTime.UtcNow;
-        ModifyTime = DateTime.UtcNow;
-    }
 }

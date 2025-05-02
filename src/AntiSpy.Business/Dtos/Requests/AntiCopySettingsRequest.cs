@@ -1,24 +1,23 @@
 ﻿
 public class AntiCopySettingsRequest
 {
-    public bool ProtectImages { get; set; } = true;
-    public bool ProtectText { get; set; } = true;
-    public bool StopKeyboardShortcuts { get; set; } = true;
-    public bool ShowAlertMessage { get; set; } = true;
-    public string SelectionDisabledMessage { get; set; } = "Content is protected !!";
+    public bool ProtectImages { get; set; } 
+    public bool ProtectText { get; set; }
+    public bool StopKeyboardShortcuts { get; set; } 
+    public bool ShowAlertMessage { get; set; }
+    public string SelectionDisabledMessage { get; set; }
 
     // ==== Alert Configuration ====
-    public int DisappearAfterSeconds { get; set; } = 2;
+    public int DisappearAfterSeconds { get; set; }
 
     // ==== Legal Notice Settings ====
-    public bool LogLegalNotice { get; set; } = true;
-    public string LegalHeader { get; set; } = "** LEGAL NOTICE **";
-    public string LegalFooter { get; set; } = "Please exit this area immediately.";
-    public string LegalContent { get; set; } = "All site content, including files, images, video, and written content is the property of iStore. " +
-        "Any attempts to mimic said content, or use it as your own without the direct consent of iStore may result in LEGAL ACTION against YOU.";
-    public AntiCopySettingsEntity ToEntity()
+    public bool LogLegalNotice { get; set; }
+    public string LegalHeader { get; set; }
+    public string LegalFooter { get; set; }
+    public string LegalContent { get; set; }
+    public SettingsEntity ToEntity()
     {
-        return new AntiCopySettingsEntity
+        return new SettingsEntity
         {
             ProtectImages = this.ProtectImages,
             ProtectText = this.ProtectText,

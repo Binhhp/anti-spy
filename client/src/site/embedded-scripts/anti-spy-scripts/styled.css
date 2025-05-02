@@ -1,0 +1,29 @@
+#anti-spy-alert {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  background-color: #fff;
+  padding: 13px 26px;
+  border-radius: 10px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #EC221F9E;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+  width: max-content;
+}
+
+#anti-spy-alert .anti-spy-alert-text{
+    font-size: 16px;
+    color: #EC221F;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+#anti-spy-alert .anti-spy-alert-warningicon{
+    width: 29px;
+    height: 29px;
+}

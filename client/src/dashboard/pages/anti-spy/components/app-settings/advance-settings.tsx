@@ -15,6 +15,8 @@ const AdvanceSetting: FC = () => {
   const onChange = (key: "showAlertMessage" | "logLegalNotice") => () => {
     state.setting[key] = !state.setting[key];
     state.setState(state.setting);
+
+    state.resetEventSettings();
   };
 
   const onChangeInput =
@@ -28,7 +30,8 @@ const AdvanceSetting: FC = () => {
     ) =>
     (e: any) => {
       if (key === "disappearAfterSeconds") {
-        state.setting.disappearAfterSeconds = Number(e.target.value);
+        const val = Number(e.target.value);
+        state.setting.disappearAfterSeconds = val;
       } else {
         state.setting[key] = e.target.value;
       }
@@ -43,6 +46,10 @@ const AdvanceSetting: FC = () => {
       </Text>
     </Box>
   );
+
+  const onResetEvent = () => {
+    state.resetEventSettings();
+  };
 
   return (
     <Card className="anti-spy-advance-settings">
@@ -70,6 +77,7 @@ const AdvanceSetting: FC = () => {
                     className="anti-spy-advance-settings__alert__input"
                     disabled={!state.setting.showAlertMessage}
                     onChange={onChangeInput("selectionDisabledMessage")}
+                    onBlur={onResetEvent}
                     size="medium"
                     value={state.setting.selectionDisabledMessage}
                     placeholder="Selection disabled message"
@@ -80,6 +88,7 @@ const AdvanceSetting: FC = () => {
                     className="anti-spy-advance-settings__alert__input"
                     disabled={!state.setting.showAlertMessage}
                     onChange={onChangeInput("disappearAfterSeconds")}
+                    onBlur={onResetEvent}
                     size="medium"
                     type="number"
                     value={state.setting.disappearAfterSeconds}

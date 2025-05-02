@@ -2,7 +2,9 @@
 using AntiSpy.Business.BusinessExceptions.Extensions;
 using AntiSpy.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Mvc;
-public class InstallerController(Serilog.ILogger _logger, UnitOfWork _unitOfWork, AppSetting appSetting) : Controller
+
+[ApiExplorerSettings(IgnoreApi = true)]
+public class InstallerController(Serilog.ILogger _logger, UnitOfWork _unitOfWork, AppSetting appSetting) : ControllerBase
 {
     [Route("installer/authorize")]
     public IActionResult Authorize(string token, params string[] values)
@@ -11,7 +13,7 @@ public class InstallerController(Serilog.ILogger _logger, UnitOfWork _unitOfWork
         try
         {
             token.ThenThrowIfNull(Exceptions.NotFound("Access tokens"));
-            string installUrl = $"{appSetting.WixSetting.UriInstall}?token={token}&appId={appSetting.WixSetting.ClientId}&redirectUrl=https://{Request.Host.Value}/installer/install";
+            string installUrl = $"{appSetting.WixSetting.UriInstall}?token={token}&appId={appSetting.WixSetting.AppId}&redirectUrl=https://{Request.Host.Value}/installer/install";
             return Redirect(installUrl);
         }
         catch (Exception ex)

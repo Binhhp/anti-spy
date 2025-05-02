@@ -1,5 +1,8 @@
 ﻿
-public class AntiCopySettingsEntity : BaseEntity
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+public class SettingsEntity : BaseEntity
 {
     // ==== Content Protection Settings ====
     public bool ProtectImages { get; set; }
@@ -18,4 +21,11 @@ public class AntiCopySettingsEntity : BaseEntity
     public string LegalContent { get; set; }
     public string StoreId { get; set; }
     public StoreEntity Store { get; set; }
+    public class Configuration : IEntityTypeConfiguration<SettingsEntity>
+    {
+        public void Configure(EntityTypeBuilder<SettingsEntity> builder)
+        {
+            builder.ToTable("Settings");
+        }
+    }
 }

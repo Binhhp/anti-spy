@@ -13,7 +13,7 @@
         }
         public static T ThenThrowIfNull<T>(this T? obj, Exception exception) where T : class
         {
-            if (obj == null || string.IsNullOrEmpty(obj as string))
+            if (obj == null || (typeof(string) == obj.GetType() && string.IsNullOrEmpty(obj as string)))
             {
                 throw exception;
             }

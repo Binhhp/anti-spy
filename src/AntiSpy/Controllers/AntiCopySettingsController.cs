@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
 {
@@ -14,7 +15,15 @@ public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
     [Route("stores/{instanceId}")]
     public async Task<IActionResult> Set([FromRoute] string instanceId, [FromBody] AntiCopySettingsRequest request)
     {
-        await _unit.AntiCopySettings.Set(instanceId, request);
-        return Ok();
+        var resposne = await _unit.AntiCopySettings.Set(instanceId, request);
+        return Ok(resposne);
+    }
+
+    [HttpGet]
+    [Route("sites/{siteId}")]
+    public IActionResult GetSettingBySiteId([FromRoute] string siteId)
+    {
+        var store = _unit.AntiCopySettings.GetBySiteId(siteId);
+        return Ok(store);
     }
 }

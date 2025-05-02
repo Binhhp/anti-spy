@@ -1,9 +1,9 @@
-export interface base {
+export interface Base {
     id?: string;
     createdTime?: string;
     modifyTime?: string;
 }
-export interface antiSetting extends base {
+export interface AntiSetting extends Base {
     protectImages: boolean;
     protectText: boolean;
     stopKeyboardShortcuts: boolean;
@@ -15,10 +15,10 @@ export interface antiSetting extends base {
     legalFooter: string;
     legalContent: string;
     storeId?: string;
-    store?: store;
+    store?: Store;
   }
 
-export interface store extends base {
+export interface Store extends Base {
     instanceId: string;
     email: string | null;
     phone: string | null;
