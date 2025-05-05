@@ -5,6 +5,7 @@ import {
   FormField,
   Input,
   InputArea,
+  NumberInput,
   Text,
 } from "@wix/design-system";
 import React, { FC } from "react";
@@ -30,8 +31,7 @@ const AdvanceSetting: FC = () => {
     ) =>
     (e: any) => {
       if (key === "disappearAfterSeconds") {
-        const val = Number(e.target.value);
-        state.setting.disappearAfterSeconds = val;
+        state.setting.disappearAfterSeconds = e;
       } else {
         state.setting[key] = e.target.value;
       }
@@ -49,6 +49,18 @@ const AdvanceSetting: FC = () => {
 
   const onResetEvent = () => {
     state.resetEventSettings();
+  };
+
+  const onBlurDissapear = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    if (
+      !e.target.value ||
+      Number(e.target.value) < 0 ||
+      Number(e.target.value) > 11
+    ) {
+      state.setting.disappearAfterSeconds = 2;
+      state.setState(state.setting);
+    }
+    onResetEvent();
   };
 
   return (
@@ -84,15 +96,22 @@ const AdvanceSetting: FC = () => {
                   />
                 </FormField>
                 <FormField labelSize="small" label="Disappear after (second)">
-                  <Input
+                  <NumberInput
+                    min={1}
+                    max={10}
                     className="anti-spy-advance-settings__alert__input"
                     disabled={!state.setting.showAlertMessage}
                     onChange={onChangeInput("disappearAfterSeconds")}
-                    onBlur={onResetEvent}
+                    onBlur={onBlurDissapear}
                     size="medium"
-                    type="number"
                     value={state.setting.disappearAfterSeconds}
                     placeholder="Disappear after (second)"
+                    invalidMessage={
+                      state.setting.disappearAfterSeconds > 0 &&
+                      state.setting.disappearAfterSeconds < 11
+                        ? ""
+                        : "Enter input between 1 to 10."
+                    }
                   />
                 </FormField>
               </Box>

@@ -9,7 +9,7 @@ export class events {
     this.appendBodyAlert = appendBodyAlert ?? true;
     this.setting = setting;
   }
-  initProtection = () => {
+  init = () => {
     if (this.setting?.protectImages) {
       this.protectImages.use();
     }
@@ -30,24 +30,26 @@ export class events {
   }
   protectImages = {
     use: () => {
-      this.$target?.querySelectorAll("img").forEach((img) => {
-        img.addEventListener("contextmenu", this.protectImages._onImgContextMenu);
-        img.addEventListener("dragstart", this.protectImages._onImgDragStart);
-      });
+      const documentEle: any = this.appendBodyAlert ? document.body : this.$target;
+      documentEle.addEventListener("contextmenu", this.protectImages._onImgContextMenu);
+      documentEle.addEventListener("dragstart", this.protectImages._onImgDragStart);
     },
     remove: () => {
-      this.$target?.querySelectorAll("img").forEach((img) => {
-        img.removeEventListener("contextmenu", this.protectImages._onImgContextMenu);
-        img.removeEventListener("dragstart",this.protectImages._onImgDragStart);
-      });
+      const documentEle: any = this.appendBodyAlert ? document.body : this.$target;
+      documentEle.removeEventListener("contextmenu", this.protectImages._onImgContextMenu);
+      documentEle.removeEventListener("dragstart", this.protectImages._onImgDragStart);
     },
-    _onImgContextMenu: (e: Event) => {
-      e.preventDefault();
-      this.showPopupAlert();
+    _onImgContextMenu: (e: any) => {
+      if (e.target.tagName === "IMG") {
+        e.preventDefault();
+        this.showPopupAlert();
+      }
     },
-    _onImgDragStart: (e: Event) => {
-      e.preventDefault();
-      this.showPopupAlert();
+    _onImgDragStart: (e: any) => {
+      if (e.target.tagName === "IMG") {
+        e.preventDefault();
+        this.showPopupAlert();
+      }
     }
   }
 
@@ -79,12 +81,12 @@ export class events {
       document.addEventListener("keydown", this.stopKeyboardShortcuts._onKeydown);
     },
     remove: () => {
-      document.removeEventListener("keydown", () => {});
+      document.removeEventListener("keydown", this.stopKeyboardShortcuts._onKeydown);
     },
     _onKeydown: (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
       if (
-        (e.ctrlKey && ["a", "c", "v"].includes(key)) ||
+        (e.ctrlKey && ["a", "c", "v", "s", "x"].includes(key)) ||
         (e.shiftKey &&
           ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key))
       ) {

@@ -17,7 +17,8 @@ import MainLayout from "dashboard/pages/anti-spy/layout/main";
 import { wixProvider } from "./domain/domain.model";
 import { dashboard } from "@wix/dashboard";
 import { SetSettingsRequest } from "./models/set-setting";
-import { apiExplorer } from "apis/api";
+import { apiExplorer } from "backend/api/anti-spy-api/api";
+import { AntiSettingDto } from "./state-manager/model";
 
 const AntiSpy: FC = () => {
   wixProvider.init();
@@ -44,7 +45,16 @@ const AppSettings: FC = () => {
       console.log("AntiSpy: Could not connect to api!!");
       return;
     }
-    const settings = resp.data.settings;
+    let settings = resp.data.settings;
+    if (!settings) {
+      settings = AntiSettingDto.Init();
+      if (resp.data.instanceId) {
+        await apiExplorer.setAsync(
+          resp.data.instanceId,
+          new SetSettingsRequest(settings)
+        );
+      }
+    }
     state.setState(settings, resp.data);
     state.setStatePrev(settings);
   };

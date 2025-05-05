@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
 {
@@ -25,5 +24,13 @@ public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
     {
         var store = _unit.AntiCopySettings.GetBySiteId(siteId);
         return Ok(store);
+    }
+
+    [HttpGet]
+    [Route("stores/{instanceId}/uninstall")]
+    public async Task<IActionResult> UnInstallStore([FromRoute] string instanceId)
+    {
+        await _unit.Store.UninstallAsync(instanceId);
+        return Ok();
     }
 }

@@ -45,7 +45,7 @@ export function StateContextProvider({ children }: any) {
       false
     );
     setEventSettings(event);
-    event.initProtection();
+    event.init();
   };
 
   const setStatePrev = (settingPrev: AntiSetting) => {

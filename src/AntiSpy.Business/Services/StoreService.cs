@@ -2,6 +2,7 @@
 using AntiSpy.Business.BusinessExceptions.Extensions;
 using AntiSpy.Infrastructure.Configurations;
 using AntiSpy.Infrastructure.Containers.LifeScoped;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using WixSharp;
 using WixSharp.Services.AppInstances;
@@ -9,6 +10,14 @@ using WixSharp.Services.BusinessInfo;
 
 public class StoreService(AppSetting _appSetting, ILogger _logger, AntiSpyDbContext _dbContext) : IScopedDependency
 {
+    public async Task UninstallAsync(string instanceId)
+    {
+        var store = _dbContext.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId);
+        store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
+        if(store.Settings != null) _dbContext.Settings.Remove(store.Settings);
+        _dbContext.Store.Remove(store);
+        await _dbContext.SaveChangesAsync();
+    }
     public async Task<string> InstallAsync(string code, string instanceId)
     {
         _logger.Debug("End request install wix {@code} {@clientId} {@clientSecret}", code, _appSetting.WixSetting.AppId, _appSetting.WixSetting.AppSecret);
