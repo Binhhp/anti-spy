@@ -24,9 +24,8 @@ public class InstallerController(Serilog.ILogger _logger, UnitOfWork _unitOfWork
     }
 
     [Route("installer/install")]
-    public async Task<IActionResult> Install(string code, string state, string instanceId)
+    public async Task<IActionResult> Install(string code, string instanceId, string state = "")
     {
-        _logger.Debug("Install App", "code: {@code}", "state {@state}", "instanceId {@instanceId}", code, state, instanceId);
         var redirectUri = await _unitOfWork.Store.InstallAsync(code, instanceId);
         return Redirect(redirectUri);
     }

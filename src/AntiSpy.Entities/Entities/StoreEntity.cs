@@ -17,6 +17,7 @@ public class StoreEntity : BaseEntity
     public string Token { get; set; }
     public string RefreshToken { get; set; }
     public string? Currency { get; set; }
+    public bool IsDeleted { get; set; }
     public SettingsEntity Settings { get; set; }
     public class Configuration : IEntityTypeConfiguration<StoreEntity>
     {

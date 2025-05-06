@@ -9,7 +9,7 @@ public class AntiCopySettingService(AntiSpyDbContext _context) : IScopedDependen
     {
         try
         {
-            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.SiteId == siteId);
+            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.SiteId == siteId && !x.IsDeleted);
             store.ThenThrowIfNull(Exceptions.NotFound(siteId));
             return new ResponseResult<StoreResponse>(new StoreResponse(store));
         }
@@ -22,7 +22,7 @@ public class AntiCopySettingService(AntiSpyDbContext _context) : IScopedDependen
     {
         try
         {
-            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId);
+            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId && !x.IsDeleted);
             store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
             return new ResponseResult<StoreResponse>(new StoreResponse(store));
         }
@@ -36,7 +36,7 @@ public class AntiCopySettingService(AntiSpyDbContext _context) : IScopedDependen
         var result = new ResponseResult<object>();
         try
         {
-            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId);
+            var store = _context.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId && !x.IsDeleted);
             store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
             var newSettings = request != null ? request.ToEntity() : null;
             if (newSettings == null)

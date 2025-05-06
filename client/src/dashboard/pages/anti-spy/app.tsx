@@ -17,7 +17,7 @@ import MainLayout from "dashboard/pages/anti-spy/layout/main";
 import { wixProvider } from "./domain/domain.model";
 import { dashboard } from "@wix/dashboard";
 import { SetSettingsRequest } from "./models/set-setting";
-import { apiExplorer } from "backend/api/anti-spy-api/api";
+import { apiExplorer } from "api/api-explorer";
 import { AntiSettingDto } from "./state-manager/model";
 import { embeddedScripts } from "@wix/app-management";
 
@@ -54,7 +54,7 @@ const AppSettings: FC = () => {
       if (resp.data.instanceId) {
         const { embedScript } = embeddedScripts;
         console.log("AntiSpy: create setting and embedded scripts");
-        await Promise.all([
+        Promise.all([
           apiExplorer.setAsync(
             resp.data.instanceId,
             new SetSettingsRequest(settings)

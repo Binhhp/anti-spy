@@ -48,4 +48,5 @@ app.UseSwaggerUI(c =>
 });
 app.UseCors(corBuilder => corBuilder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
+app.UseMiddleware<ExceptionLoggingMiddleware>();
 app.Run();

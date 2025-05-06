@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AntiSpy.Entities.Migrations
 {
     [DbContext(typeof(AntiSpyDbContext))]
-    [Migration("20250430144426_init_table")]
+    [Migration("20250506035848_init_table")]
     partial class init_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,6 +105,9 @@ namespace AntiSpy.Entities.Migrations
                     b.Property<string>("InstanceId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifyTime")
                         .HasColumnType("datetime2");

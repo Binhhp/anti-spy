@@ -1,8 +1,11 @@
-import { ApiResponse, ResponseResult } from "dashboard/pages/anti-spy/models/response";
+import {
+  ApiResponse,
+  ResponseResult,
+} from "dashboard/pages/anti-spy/models/response";
 import { SetSettingsRequest } from "dashboard/pages/anti-spy/models/set-setting";
 import { Store } from "dashboard/pages/anti-spy/models/store";
-import { RootURL } from "./config";
 
+const RootURL = import.meta.env.VITE_API_URL;
 export class apiExplorer {
   static getBySiteIdAsync = async (
     siteId: string
@@ -43,5 +46,5 @@ export class apiExplorer {
     if (!instanceId) return "".thenResultErrorIf("Invalid instance Id");
     await fetch(`${RootURL}/stores/${instanceId}/uninstall`);
     return ApiResponse.Success();
-  }
+  };
 }

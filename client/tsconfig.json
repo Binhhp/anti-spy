@@ -1,6 +1,8 @@
 {
-  "extends": "@wix/cli-app/tsconfig.app.json",
   "compilerOptions": {
+    "types": [
+      "node"
+    ],
     "target": "es5",
     "lib": [
       "dom",
@@ -20,11 +22,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "baseUrl": "src",
-    "types": ["node"],
-    "typeRoots": [
-      "types"
-    ]
+    "baseUrl": "src"
   },
   "include": [
     "src/**/*"

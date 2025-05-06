@@ -39,4 +39,13 @@ public class ResponseResult<T>
         };
         return this;
     }
+
+    public static ResponseResult<T> WithError(string msg)
+    {
+        return new ResponseResult<T>().WihError("bad_request", msg);
+    }
+    public static ResponseResult<T> WithSuccess()
+    {
+        return new ResponseResult<T>();
+    }
 }

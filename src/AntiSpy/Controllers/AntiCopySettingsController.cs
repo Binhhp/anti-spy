@@ -26,11 +26,11 @@ public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
         return Ok(store);
     }
 
-    [HttpGet]
+    [HttpDelete]
     [Route("stores/{instanceId}/uninstall")]
     public async Task<IActionResult> UnInstallStore([FromRoute] string instanceId)
     {
-        await _unit.Store.UninstallAsync(instanceId);
+        var response = await _unit.Store.UninstallAsync(instanceId);
         return Ok();
     }
 }

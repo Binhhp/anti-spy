@@ -1,1 +1,0 @@
-export const RootURL = "https://localhost:44396"

@@ -1,8 +1,8 @@
 interface Window {
   instanceId: string;
   wixEmbedsAPI: {
-    getMetaSiteId: () => string
-  }
+    getMetaSiteId: () => string;
+  };
 }
 
 declare interface String {

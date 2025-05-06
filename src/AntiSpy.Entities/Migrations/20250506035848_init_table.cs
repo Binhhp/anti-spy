@@ -26,6 +26,7 @@ namespace AntiSpy.Entities.Migrations
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

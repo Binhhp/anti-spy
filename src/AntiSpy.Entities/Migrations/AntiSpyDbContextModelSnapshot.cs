@@ -104,6 +104,9 @@ namespace AntiSpy.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("ModifyTime")
                         .HasColumnType("datetime2");
 

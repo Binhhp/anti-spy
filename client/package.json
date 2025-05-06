@@ -22,9 +22,10 @@
     "typescript": "~5.8.2"
   },
   "scripts": {
-    "deploy": "wix app build && wix app release",
+    "deploy": "yarn build && wix app release",
     "wix": "wix",
     "build": "wix app build",
+    "build:dev": "wix app build",
     "release": "wix app release",
     "dev": "wix app dev",
     "preview": "wix app preview",
