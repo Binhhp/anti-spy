@@ -19,6 +19,7 @@ import { dashboard } from "@wix/dashboard";
 import { SetSettingsRequest } from "./models/set-setting";
 import { apiExplorer } from "backend/api/anti-spy-api/api";
 import { AntiSettingDto } from "./state-manager/model";
+import { embeddedScripts } from "@wix/app-management";
 
 const AntiSpy: FC = () => {
   wixProvider.init();
@@ -46,17 +47,22 @@ const AppSettings: FC = () => {
       return;
     }
     let settings = resp.data.settings;
+    state.setState(settings, resp.data);
+    state.setStatePrev(settings);
     if (!settings) {
       settings = AntiSettingDto.Init();
       if (resp.data.instanceId) {
-        await apiExplorer.setAsync(
-          resp.data.instanceId,
-          new SetSettingsRequest(settings)
-        );
+        const { embedScript } = embeddedScripts;
+        console.log("AntiSpy: create setting and embedded scripts");
+        await Promise.all([
+          apiExplorer.setAsync(
+            resp.data.instanceId,
+            new SetSettingsRequest(settings)
+          ),
+          embedScript({}),
+        ]);
       }
     }
-    state.setState(settings, resp.data);
-    state.setStatePrev(settings);
   };
 
   useEffect(() => {
