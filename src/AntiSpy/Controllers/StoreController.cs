@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
+public class StoreController(UnitOfWork _unit) : ControllerBase
 {
     [HttpGet]
     [Route("stores/{instanceId}")]
     public IActionResult Get([FromRoute] string instanceId)
     {
-        var settings = _unit.AntiCopySettings.Get(instanceId);
+        var settings = _unit.Settings.Get(instanceId);
         return Ok(settings);
     }
 
@@ -14,7 +14,7 @@ public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
     [Route("stores/{instanceId}")]
     public async Task<IActionResult> Set([FromRoute] string instanceId, [FromBody] AntiCopySettingsRequest request)
     {
-        var resposne = await _unit.AntiCopySettings.Set(instanceId, request);
+        var resposne = await _unit.Settings.Set(instanceId, request);
         return Ok(resposne);
     }
 
@@ -22,8 +22,16 @@ public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
     [Route("sites/{siteId}")]
     public IActionResult GetSettingBySiteId([FromRoute] string siteId)
     {
-        var store = _unit.AntiCopySettings.GetBySiteId(siteId);
+        var store = _unit.Settings.GetBySiteId(siteId);
         return Ok(store);
+    }
+
+    [HttpGet]
+    [Route("stores/{instanceId}/embedded-scripts")]
+    public async Task<IActionResult> EmbeddedScripts([FromRoute] string instanceId)
+    {
+        var embeddedScripts = await _unit.Store.EmbeddedScripts(instanceId);
+        return Ok(embeddedScripts);
     }
 
     [HttpDelete]
@@ -31,6 +39,6 @@ public class AntiCopySettingsController(UnitOfWork _unit) : ControllerBase
     public async Task<IActionResult> UnInstallStore([FromRoute] string instanceId)
     {
         var response = await _unit.Store.UninstallAsync(instanceId);
-        return Ok();
+        return Ok(response);
     }
 }

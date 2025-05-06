@@ -7,9 +7,40 @@ using Serilog;
 using WixSharp;
 using WixSharp.Services.AppInstances;
 using WixSharp.Services.BusinessInfo;
+using WixSharp.Services.Script;
 
 public class StoreService(AppSetting _appSetting, ILogger _logger, AntiSpyDbContext _dbContext) : IScopedDependency
 {
+    public async Task<ResponseResult<EmbedScriptDto>> EmbeddedScripts(string instanceId)
+    {
+        var store = _dbContext.Store.FirstOrDefault(x => x.InstanceId == instanceId);
+        store.ThenThrowIfNull(Exceptions.NotFound(instanceId));
+
+        var authorize = new WixAuthorizationService();
+        var accessToken = await authorize.GetAccessToken(_appSetting.WixSetting.AppId, _appSetting.WixSetting.AppSecret, instanceId);
+        accessToken.ThenThrowIfNull(Exceptions.NotFound($"Access token from {instanceId}"));
+        var managerScript = new ManagerScriptService(accessToken.AccessToken);
+
+        var embeddedScriptInfo = await managerScript.GetEmbedScript();
+        if(embeddedScriptInfo == null)
+        {
+            try
+            {
+                var property = new EmbedScriptProperties
+                {
+                    Disabled = false,
+                    Parameters = null
+                };
+                await managerScript.EmbedScript(property);
+                embeddedScriptInfo = new EmbedScriptDto(property);
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, $"Could not embedded scripts {instanceId}");
+            }
+        }
+        return ResponseResult<EmbedScriptDto>.WithData(embeddedScriptInfo);
+    }
     public async Task<ResponseResult<object>> UninstallAsync(string instanceId)
     {
         var store = _dbContext.Store.Include(x => x.Settings).FirstOrDefault(x => x.InstanceId == instanceId && !x.IsDeleted);

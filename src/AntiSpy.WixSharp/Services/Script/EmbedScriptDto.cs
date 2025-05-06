@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace WixSharp.Services.Script
 {
@@ -7,6 +6,13 @@ namespace WixSharp.Services.Script
     {
         [JsonProperty("properties")]
         public EmbedScriptProperties Properties { get; set; }
+        public EmbedScriptDto()
+        {
+        }
+        public EmbedScriptDto(EmbedScriptProperties properties)
+        {
+            Properties = properties;
+        }
     }
 
     public class EmbedScriptProperties

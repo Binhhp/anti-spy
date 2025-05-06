@@ -23,7 +23,7 @@ public class ExceptionLoggingMiddleware(RequestDelegate _next)
                     errorMsg = ex.InnerException.InnerException.Message;
                 }
             }
-            var response = new ResponseResult<object>().WihError("bad_request", errorMsg + ex.StackTrace);
+            var response = new ResponseResult<object>().WihError("bad_request", errorMsg);
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, Formatting.Indented));
         }
     }

@@ -3,7 +3,7 @@ import {
   ResponseResult,
 } from "dashboard/pages/anti-spy/models/response";
 import { SetSettingsRequest } from "dashboard/pages/anti-spy/models/set-setting";
-import { Store } from "dashboard/pages/anti-spy/models/store";
+import { EmbedScriptDto, Store } from "dashboard/pages/anti-spy/models/store";
 
 const RootURL = import.meta.env.VITE_API_URL;
 export class apiExplorer {
@@ -44,7 +44,16 @@ export class apiExplorer {
 
   static unInstallStore = async (instanceId?: string) => {
     if (!instanceId) return "".thenResultErrorIf("Invalid instance Id");
-    await fetch(`${RootURL}/stores/${instanceId}/uninstall`);
+    await fetch(`${RootURL}/stores/${instanceId}/uninstall`, {
+      method: "DELETE"
+    });
     return ApiResponse.Success();
+  };
+  
+  static embeddedScripts = async (instanceId?: string) : Promise<ResponseResult<EmbedScriptDto>> => {
+    if (!instanceId) return "".thenResultErrorIf("Invalid instance Id");
+    const resp = await fetch(`${RootURL}/stores/${instanceId}/embedded-scripts`).then(x => x.json())
+      .catch(() => instanceId.thenResultErrorIf("Invalid instance Id"));
+    return resp;
   };
 }

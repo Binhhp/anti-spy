@@ -21,3 +21,12 @@ interface Base {
     createdTime: string;
     modifyTime: string;
 }
+
+export interface EmbedScriptDto {
+    properties: EmbedScriptProperties;
+}
+
+export interface EmbedScriptProperties {
+    parameters: { [key: string]: string; };
+    disabled: boolean;
+}

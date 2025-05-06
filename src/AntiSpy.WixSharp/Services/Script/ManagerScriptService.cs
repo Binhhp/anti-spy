@@ -8,15 +8,25 @@ namespace WixSharp.Services.Script
         {
         }
 
-        public async Task EmbedScript(EmbedScriptDto req)
+        public async Task EmbedScript(EmbedScriptProperties req)
         {
-            await ExecutePostAsync("apps/v1/scripts", req);
+            await ExecutePostAsync("apps/v1/scripts", new EmbedScriptDto()
+            {
+                Properties = req
+            });
         }
 
         public async Task<EmbedScriptDto> GetEmbedScript()
         {
-            var res = await ExecuteGetAsync<EmbedScriptDto>("apps/v1/scripts");
-            return res;
+            try
+            {
+                var res = await ExecuteGetAsync<EmbedScriptDto>("apps/v1/scripts");
+                return res;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

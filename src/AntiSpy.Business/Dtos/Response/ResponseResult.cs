@@ -48,4 +48,8 @@ public class ResponseResult<T>
     {
         return new ResponseResult<T>();
     }
+    public static ResponseResult<T> WithData(T data)
+    {
+        return new ResponseResult<T>(data);
+    }
 }
