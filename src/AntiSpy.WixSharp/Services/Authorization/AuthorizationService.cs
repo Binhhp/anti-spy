@@ -47,5 +47,19 @@ namespace WixSharp
             var result = await ExecutePostAsync<WixAuthorization>("oauth/access", data, cancellationToken);
             return result;
         }
+
+        public async Task<TokenResponse> GetAccessToken(string clientId, string clientSecret, string instance_id, CancellationToken cancellationToken = default)
+        {
+            dynamic data = new
+            {
+                client_secret = clientSecret,
+                client_id = clientId,
+                grant_type = "client_credentials",
+                instance_id
+            };
+
+            var result = await ExecutePostAsync<TokenResponse>("oauth2/token", data, cancellationToken);
+            return result;
+        }
     }
 }
