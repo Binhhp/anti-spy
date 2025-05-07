@@ -1,14 +1,5 @@
-﻿using Serilog;
-public abstract class MessageHandlerBase<TMessage> : IMessageHandler where TMessage : class
+﻿public abstract class MessageHandlerBase<TMessage>(ILogger _logger, IServiceProvider _serviceProvider) : IMessageHandler where TMessage : class
 {
-    protected ILogger _logger;
-    protected IServiceProvider _serviceProvider;
-    protected MessageHandlerBase(ILogger logger, IServiceProvider serviceProvider)
-    {
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-    }
-
     async Task IMessageHandler.Handle(object messageBase)
     {
         _logger.Debug("Begin => IMessageHandler.Handle {@messageBase}", messageBase);
@@ -27,10 +18,5 @@ public abstract class MessageHandlerBase<TMessage> : IMessageHandler where TMess
         }
         _logger.Debug("End => IMessageHandler.Handle");
     }
-    /// <summary>
-    /// Implement to handling message.
-    /// </summary>
-    /// <param name="message">Message.</param>
-    /// <returns></returns>
     protected abstract Task Handle(TMessage message);
 }

@@ -12,7 +12,7 @@ public class StoreController(UnitOfWork _unit) : ControllerBase
 
     [HttpPost]
     [Route("stores/{instanceId}")]
-    public async Task<IActionResult> Set([FromRoute] string instanceId, [FromBody] AntiCopySettingsRequest request)
+    public async Task<IActionResult> Set([FromRoute] string instanceId, [FromBody] SettingsRequest request)
     {
         var resposne = await _unit.Settings.Set(instanceId, request);
         return Ok(resposne);

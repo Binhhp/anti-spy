@@ -3,8 +3,8 @@
 public class UnitOfWork : IScopedDependency
 {
     public StoreService Store { get; private set; }
-    public AntiCopySettingService Settings { get; private set; }
-    public UnitOfWork(StoreService storeService, AntiCopySettingService antiCopySettings)
+    public SettingService Settings { get; private set; }
+    public UnitOfWork(StoreService storeService, SettingService antiCopySettings)
     {
         Store = storeService;
         Settings = antiCopySettings;

@@ -1,5 +1,5 @@
 ﻿
-public class AntiCopySettingsRequest
+public class SettingsRequest
 {
     public bool ProtectImages { get; set; } 
     public bool ProtectText { get; set; }

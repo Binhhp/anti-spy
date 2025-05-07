@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AntiSpy.Entities\AntiSpy.Entities.csproj" />
-    <ProjectReference Include="..\AntiSpy.Infrastructure\AntiSpy.Infrastructure.csproj" />
     <ProjectReference Include="..\AntiSpy.WixSharp\AntiSpy.WixSharp.csproj" />
   </ItemGroup>
 

@@ -3,7 +3,6 @@ using AntiSpy.Business.BusinessExceptions.Extensions;
 using AntiSpy.Infrastructure.Configurations;
 using AntiSpy.Infrastructure.Containers.LifeScoped;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 using WixSharp;
 using WixSharp.Services.AppInstances;
 using WixSharp.Services.BusinessInfo;

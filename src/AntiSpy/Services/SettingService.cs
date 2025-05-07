@@ -3,7 +3,7 @@ using AntiSpy.Business.BusinessExceptions.Extensions;
 using AntiSpy.Infrastructure.Containers.LifeScoped;
 using Microsoft.EntityFrameworkCore;
 
-public class AntiCopySettingService(AntiSpyDbContext _context) : IScopedDependency
+public class SettingService(AntiSpyDbContext _context) : IScopedDependency
 {
     public ResponseResult<StoreResponse> GetBySiteId(string siteId)
     {
@@ -31,7 +31,7 @@ public class AntiCopySettingService(AntiSpyDbContext _context) : IScopedDependen
             return new ResponseResult<StoreResponse>().WihError("invalid_instanceId", ex.Message);
         }
     }
-    public async Task<ResponseResult<object>> Set(string instanceId, AntiCopySettingsRequest request)
+    public async Task<ResponseResult<object>> Set(string instanceId, SettingsRequest request)
     {
         var result = new ResponseResult<object>();
         try

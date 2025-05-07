@@ -1,17 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Serilog;
+﻿using Newtonsoft.Json;
 
-class MessageEventHandlerExecutor : IMessageEventHandlerExecutor
+class MessageEventHandlerExecuto(IServiceScopeFactory _serviceScopeFactory, ILogger _logger) : IMessageEventHandlerExecutor
 {
-    private IServiceScopeFactory _serviceScopeFactory;
-    private ILogger _logger;
-    public MessageEventHandlerExecutor(IServiceScopeFactory serviceScopeFactory, ILogger logger)
-    {
-        _serviceScopeFactory = serviceScopeFactory;
-        _logger = logger;
-    }
-
     public Task Execute(object message)
     {
         var messageType = message.GetType();
